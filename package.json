@@ -1,0 +1,26 @@
+{
+  "name": "xforce-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "xforce-cli": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": "https://github.com/37972547/xforce-cli/issues",
+  "repositories": {
+    "type": "git",
+    "url": "git+https://github.com/37972547/xforce-cli.git"
+  }
+  "dependencies": {
+    "commander": "^2.16.0",
+    "download-git-repo": "^1.0.2",
+    "fs-extra": "^7.0.0",
+    "inquirer": "^6.0.0"
+  }
+}
