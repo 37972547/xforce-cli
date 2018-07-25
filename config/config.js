@@ -1,5 +1,10 @@
-const util = require('./util');
+const env = require('./env').env();
+const packageCfg = require('../package.json');
+const util = require('../utils/util');
+
+
 const config = {
+    env: env,
     // 问答-配置开发环境
     messageCommandQuestion: [
         {
@@ -90,7 +95,7 @@ const config = {
             }
         }
     ],
-    packagePath: {
+    packages: {
         'back': {
             name: '后端应用',
             path: './lib/server'
