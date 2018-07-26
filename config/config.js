@@ -1,10 +1,11 @@
-const env = require('./env').env();
+const system = require('./system').system();
 const packageCfg = require('../package.json');
 const util = require('../utils/util');
 
 
 const config = {
-    env: env,
+    vertion: packageCfg.version,
+    system: system,
     // 问答-配置开发环境
     messageCommandQuestion: [
         {

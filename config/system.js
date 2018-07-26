@@ -1,12 +1,12 @@
 const os = require('os');
 
-const env = function () {
-    const env = os.platform();
+const system = function () {
+    const system = os.platform();
     const options = {
         windows: false
     };
 
-    switch (env) {
+    switch (system) {
         case 'win32':
             options.windows = true;
         default:
@@ -16,4 +16,4 @@ const env = function () {
     return options
 };
 
-exports.env = env;
+exports.system = system;

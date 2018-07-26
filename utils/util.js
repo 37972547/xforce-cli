@@ -12,10 +12,10 @@ const isReact = function (answers) {
  * @return {[String]}
 * */
 const objValueToString = function(obj) {
-    const arr = Object.values(obj)
+    const arr = Object.values(obj);
     arr.pop();
     return arr.join(',').replace(/,/g, '');
-}
+};
 
 module.exports = {
     isFore: isFore,
