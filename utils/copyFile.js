@@ -3,7 +3,7 @@ const fse = require('fs-extra');
 const path = require('path');
 const config = require('../config/config').config;
 const util = require('./util');
-const getProjectPath = require('./systemCommand').getProjectPath;
+const system = require('./systemCommand');
 /**
  * 拷贝环境
  * @param {[Object]} selectResult 生成环境配置信息
@@ -20,7 +20,12 @@ async function copyProject (selectResult) {
 
     // 拷贝目标目录
     const dirTemplate = './template';
-    const projectPath = await getProjectPath();
+    const projectPath = await system.command({
+        cmdStr: system.env().windows ? 'cd' : 'pwd',
+        beforeMsg: '',
+        errMsg: '',
+        success: ''
+    });
     // 删除旧文件
     await fse.remove(dirTemplate).then(()=> {
         console.log('清空template目录');

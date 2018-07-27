@@ -1,3 +1,4 @@
+const os = require('os');
 const exec = require('child_process').exec;
 const iconv = require('iconv-lite'); //解决乱码
 const system = require('../config/system').system;
@@ -5,147 +6,51 @@ const system = require('../config/system').system;
 const encoding = 'cp936';
 const binaryEncoding = 'binary';
 
-
 /**
- * 获取当前业务开发环境路径
+ * 执行系统命令
+ * @param {[Object]} options {
+ * @property {[String]} cmdStr 命令字符
+ * @property {[String]} beforeMsg 执行前提示
+ * @property {[String]} errMsg 错误提示
+ * @property {[String]} successMsg 成功提示
+ * };
  * */
-async function getProjectPath() {
-    const cmdStr = system().windows ? 'cd' : 'pwd';
+async function command(options = {}) {
     return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
+        options.beforeMsg && console.log(options.beforeMsg);
+        exec(options.cmdStr ,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
             if(err) {
-                console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-            } else {
-                const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                resolve(str);
-            }
-        });
-    }))
-}
-
-/**
- * 检测是否安装全局webpack
- * */
-async function isWebpack() {
-    const cmdStr = 'webpack --help';
-    return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
-            if(err) {
-                // console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-                console.log('检测到当前未安装webpack');
+                const str = iconv.decode(Buffer.from(srderr, binaryEncoding), encoding);
+                options.errMsg && console.log(options.errMsg);
                 resolve(false);
             } else {
                 const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
+                options.successMsg && console.log(options.successMsg);
                 resolve(str);
             }
         });
     }))
 }
 
-/**
- * 全局安装webpack
- * */
-async function installWebpack() {
-    const cmdStr = 'npm install -g webpack';
-    console.log('正在安装webpack，请稍后……');
-    return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
-            if(err) {
-                // console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-                console.log('安装webpack失败');
-            } else {
-                const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                console.log(str);
-                resolve(str);
-            }
-        });
-    }))
-}
+const env = function () {
+    const system = os.platform();
+    const options = {
+        windows: false
+    };
 
-/**
- * 安装webpack-command
- * */
-async function installWebpackCommand() {
-    const cmdStr = 'npm install -g webpack-command';
-    console.log('正在安装webpack-command，请稍后……');
-    return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
-            if(err) {
-                // console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-                console.log('安装webpack-command失败');
-            } else {
-                const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                console.log(str);
-                resolve(str);
-            }
-        });
-    }))
-}
+    switch (system) {
+        case 'win32':
+            options.windows = true;
+        default:
 
-/**
- * 安装webpack-cli
- * */
-async function installWebpackCli() {
-    const cmdStr = 'npm install -g webpack-cli';
-    console.log('正在安装webpack-command，请稍后……');
-    return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
-            if(err) {
-                // console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-                console.log('安装webpack-cli失败');
-            } else {
-                const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                resolve(str);
-            }
-        });
-    }))
-}
+    }
 
-/**
- * 安装webpack-cli
- * */
-async function installWebpackCli() {
-    const cmdStr = 'npm install -g webpack-cli';
-    console.log('正在安装webpack-command，请稍后……');
-    return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
-            if(err) {
-                // console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-                console.log('安装webpack-cli失败');
-            } else {
-                const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                resolve(str);
-            }
-        });
-    }))
-}
+    return options
+};
 
-
-/**
- * 打包-生产环境
- * */
-async function build() {
-    const cmdStr = 'webpack --config ./webpack.config.pro.js  --mode production';
-    console.log('正在打包，请稍后……');
-    return new Promise(((resolve, reject) => {
-        exec(cmdStr,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
-            if(err) {
-                // console.log(iconv.decode(Buffer.from(srderr, binaryEncoding), encoding))
-                console.log('安装webpack失败');
-            } else {
-                const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                resolve(str);
-            }
-        });
-    }))
-}
-
-
+exports.command = command;
 
 module.exports = {
-    isWebpack: isWebpack,
-    installWebpack: installWebpack,
-    installWebpackCommand: installWebpackCommand,
-    installWebpackCli: installWebpackCli,
-    getProjectPath: getProjectPath
+    env: env,
+    command: command,
 };
