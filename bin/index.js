@@ -4,7 +4,7 @@ const fse = require('fs-extra');
 const path = require('path');
 require('../config/options');
 
-// 加载所以命令行
+// 加载所有命令行
 fse.readdir(path.resolve(__dirname, '../', './command')).then((files) => {
     files.filter(item => /.+\.js$/.test(item))
     .forEach((file) => {

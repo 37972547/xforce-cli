@@ -1,7 +1,5 @@
-const os = require('os');
 const exec = require('child_process').exec;
 const iconv = require('iconv-lite'); //解决乱码
-const system = require('../config/system').system;
 
 const encoding = 'cp936';
 const binaryEncoding = 'binary';
@@ -21,36 +19,19 @@ async function command(options = {}) {
         exec(options.cmdStr ,{ encoding: binaryEncoding}, function (err, stdout, srderr) {
             if(err) {
                 const str = iconv.decode(Buffer.from(srderr, binaryEncoding), encoding);
-                options.errMsg && console.log(options.errMsg);
+
+                console.log(err);
+                options.errMsg ? console.log(options.errMsg) : console.log(str);
                 resolve(false);
             } else {
                 const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                options.successMsg && console.log(options.successMsg);
+                options.successMsg ? console.log(options.successMsg) : console.log(stdout);
                 resolve(str);
             }
         });
     }))
 }
 
-const env = function () {
-    const system = os.platform();
-    const options = {
-        windows: false
-    };
-
-    switch (system) {
-        case 'win32':
-            options.windows = true;
-        default:
-
-    }
-
-    return options
-};
-
-exports.command = command;
-
 module.exports = {
-    env: env,
     command: command,
 };

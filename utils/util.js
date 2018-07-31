@@ -1,9 +1,9 @@
 const isFore = function (answers) {
-    return answers.solutionName === 'fore';
+    return answers.solutionName.toLocaleLowerCase() === 'fore';
 };
 
 const isReact = function (answers) {
-    return answers.frameName === 'react';
+    return answers.frameName.toLocaleLowerCase() === 'react';
 };
 
 /**
