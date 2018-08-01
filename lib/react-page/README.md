@@ -25,7 +25,7 @@ npm run dev
 |-- common                      // 常量
 |---- menus.js                  // 菜单入口
 |-- components                  // 公用组件
-|-- config                      // 暂未用到
+|-- index                      // 暂未用到
 |-- pages                       // 功能模块
 |---- index.jsx                 // 页面布局逻辑处理入口
 |---- Layout                    // 页面布局模块

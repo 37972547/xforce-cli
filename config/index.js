@@ -2,7 +2,8 @@ const packageCfg = require('../package.json');
 const util = require('../utils/util');
 
 
-const config = {
+const index = {
+    webpackConfigFileName: 'webpack.config.json',
     vertion: packageCfg.version,
     // 问答-配置开发环境
     messageCommandQuestion: [
@@ -47,11 +48,11 @@ const config = {
             default: 'Sing',
             choices: [
                 {
-                    key: 'r',
+                    key: 's',
                     name: '单页应用',
                     value: 'SingPage'
                 }, {
-                    key: 'v',
+                    key: 'm',
                     name: '多页应用',
                     value: 'MultiPage'
                 }],
@@ -83,15 +84,16 @@ const config = {
             }
         },
         {
-            type: 'Input',
+            type: 'confirm',
             name: 'confirm',
-            message: '你确认创建项目吗(Y/n)',
-            validate: function (val) {
+            message: '你确认创建项目吗',
+            default: true
+            /*validate: function (val) {
                 if (!/y|n/i.test(val)) { // 校验位数
                     return '请输入y或n';
                 }
                 return true;
-            }
+            }*/
         }
     ],
     packages: {
@@ -109,7 +111,7 @@ const config = {
         },
         'foreReactComponent': {
             name: '前端React组件开发',
-            path: './lib/react'
+            path: './lib/react-components'
         },
         'foreVueSingPage': {
             name: '前端Vue单页项目应用',
@@ -122,4 +124,4 @@ const config = {
     }
 };
 
-exports.config = config;
+exports.config = index;

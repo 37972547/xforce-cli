@@ -2,7 +2,7 @@ const exec = require('child_process').exec;
 const iconv = require('iconv-lite'); //解决乱码
 
 const encoding = 'cp936';
-const binaryEncoding = 'binary';
+const binaryEncoding = 'utf-8';
 
 /**
  * 执行系统命令
@@ -25,7 +25,7 @@ async function command(options = {}) {
                 resolve(false);
             } else {
                 const str = iconv.decode(Buffer.from(stdout, binaryEncoding), encoding).trim();
-                options.successMsg ? console.log(options.successMsg) : console.log(stdout);
+                options.successMsg ? console.log(options.successMsg) : console.log(str);
                 resolve(str);
             }
         });

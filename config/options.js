@@ -1,5 +1,5 @@
 const program  = require('commander');
-const config = require('./config').config;
-program.version(config.vertion)
-    .usage('xforce-cli')
-    // .option('-d, --demo', '选项说明写这里');
+const config = require('./index').config;
+program
+    .version(config.vertion)
+    .usage('sanctuary [command]');
