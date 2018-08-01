@@ -8,25 +8,24 @@ program
     .description('构建项目')
     .action(async function(ops){
         // console.log(ops) 获取options选项
-        let result,
+        let answerResult,
             libDir,
             devDir = files.devDirectory();
             tempDir = files.templateDirectory();
-            result = await humanComputerInteraction(config.messageCommandQuestion);
-
+            answerResult = await humanComputerInteraction(config.messageCommandQuestion);
         // 放弃生成项目
-        if(!result.confirm) return;
+        if(!answerResult.confirm) return;
 
-        libDir = files.libDirectory(result);
+        libDir = files.libDirectory(answerResult);
 
         // 拷贝文件到template文件夹
         await files.copyFileTemp(libDir, tempDir);
-
         // 生成开发环境
         await files.copyFileDev(tempDir, devDir);
 
         const object =  {
-            path: libDir
+            path: libDir,
+            entry: ''
         };
         await files.writeFile(path.join(devDir, config.webpackConfigFileName), JSON.stringify(object, null, 2));
 

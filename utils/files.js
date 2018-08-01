@@ -112,9 +112,8 @@ const copyFileDev = async function (sourceFile, targetPathFile) {
 
         if (targetPathFileList.length) {
             anwserResult = await humanComputerInteraction(question);
+            if(!anwserResult.confirm) return;
         }
-
-        if(!anwserResult.confirm) return;
 
         sourceFileList = sourceFileList.filter(item => !/^webpack.+\.js$/.test(item));
 
