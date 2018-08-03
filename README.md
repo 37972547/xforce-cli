@@ -15,7 +15,7 @@ sanctuary-cli init
 > 配置文件 webpack.config.json
 ```json
 {
-  "path": "e:\\xforce-cli\\lib\\react-page",
+  "path": "e:\\sanctuary-cli\\lib\\react-page",
   "entry": "./src/index.html"
 }
 ```
@@ -26,8 +26,8 @@ sanctuary-cli init
 ```base
 sanctuary-cli run <name>
 ```
-name 同 package.json scripts
-注意：node 后台服务请使用npm run
+* name 同 package.json scripts
+* 注意：node 后台服务请使用npm run
 
 
 ## 目录结构
